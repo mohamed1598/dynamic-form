@@ -1,0 +1,10 @@
+<ng-container [ngSwitch]="field.type">
+
+    <app-textbox *ngSwitchCase="'text'" [form]="form" [config]="field"></app-textbox>
+    <app-select *ngSwitchCase="'select'" [form]="form" [config]="field"></app-select>
+    <app-checkbox *ngSwitchCase="'checkbox'" [form]="form" [config]="field"></app-checkbox>
+    <app-textarea *ngSwitchCase="'textarea'" [form]="form" [config]="field"></app-textarea>
+    <app-radio *ngSwitchCase="'radio'" [form]="form" [config]="field"></app-radio>
+    <app-toggle *ngSwitchCase="'toggle'" [form]="form" [config]="field"></app-toggle>
+
+</ng-container>

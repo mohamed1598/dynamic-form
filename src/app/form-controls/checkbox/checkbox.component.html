@@ -1,0 +1,8 @@
+<div class="form-check mb-3" [formGroup]="form">
+    <input [formControlName]="config.name" [id]="config.name" type="checkbox" class="form-check-input" [class.is-invalid]="validationService.isInvalid(form,config)" />
+    <label [for]="config.name" class="form-check-label">{{ config.label }}</label>
+
+    <div *ngIf="validationService.isInvalid(form,config)" class="invalid-feedback">
+        {{ validationService.getErrorMessages(form,config)[0] }}
+    </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="mb-3" [formGroup]="form">
+    <label [for]="config.name" class="form-label">{{ config.label }}</label>
+    <select [formControlName]="config.name" [id]="config.name" class="form-select" [class.is-invalid]="validationService.isInvalid(form,config)">
+        <option value="" disabled>Select {{ config.label }}</option>
+        <option *ngFor="let option of config.options" [value]="option">{{ option }}</option>
+    </select>
+
+    <div *ngIf="validationService.isInvalid(form,config)" class="invalid-feedback">
+        {{ validationService.getErrorMessages(form,config)[0] }}
+    </div>
+</div>

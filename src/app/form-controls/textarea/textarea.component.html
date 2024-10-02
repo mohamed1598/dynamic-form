@@ -1,0 +1,9 @@
+<div class="mb-3" [formGroup]="form">
+    <label [for]="config.name" class="form-label">{{ config.label }}</label>
+    <textarea [formControlName]="config.name" [id]="config.name" class="form-control" rows="3"
+        [class.is-invalid]="validationService.isInvalid(form,config)"></textarea>
+
+    <div *ngIf="validationService.isInvalid(form,config)" class="invalid-feedback">
+        {{ validationService.getErrorMessages(form,config)[0] }}
+    </div>
+</div>

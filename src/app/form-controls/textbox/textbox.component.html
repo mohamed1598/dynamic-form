@@ -1,0 +1,8 @@
+<div *ngIf="config?.name" class="mb-3 position-relative" [formGroup]="form">
+  <label [for]="config.name" class="form-label">{{ config.label }} </label>
+  <input [formControlName]="config.name" [id]="config.name" type="text" class="form-control form-control-lg shadow-sm"
+    [ngClass]="{'is-invalid': validationService.isInvalid(form,config)}" />
+  <div class="invalid-feedback">
+    <small *ngIf="validationService.isInvalid(form,config)">{{ validationService.getErrorMessages(form,config)[0] }}</small>
+  </div>
+</div>

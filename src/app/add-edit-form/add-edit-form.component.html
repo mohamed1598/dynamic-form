@@ -1,0 +1,66 @@
+<!-- design form (drag and drop) -->
+<div class="container">
+    <div class="container p-4 rounded shadow-lg bg-white  row align-items-center justify-content-center my-4">
+        <div class="col-12 my-4">
+            <div class="d-flex align-items-center justify-content-between">
+                <h2>Design Form</h2>
+                <div class="form-check form-switch mb-3 d-flex justify-content-center gap-1">
+                    <input type="checkbox" class="form-check-input" [(ngModel)]="replace" />
+                    <label for="replace"> replace component </label>
+                </div>
+                <button type="button" class="btn btn-primary" (click)="onAddFieldModal(template)">
+                    Add Field
+                </button>
+            </div>
+        </div>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="row align-items-center ">
+                <div style="height: 100%;" [class]="field?.bootstrapClass?.join(' ')"
+                    *ngFor="let field of components(); let i = index" draggable="true"
+                    (dragstart)="onDragStart($event, i)" (dragover)="onDragOver($event, i)" (drop)="onDrop($event, i)">
+                    <div class="component-box my-2">
+                      <div class="edit">
+                        <i class="bi bi-shield-check" *ngIf="hasValidation(field.type)" (click)="onAddValidationModal(field.type, field.id, template)"></i>
+                        <i class="bi bi-pencil-square" (click)="onEditFieldModal(field.id, template)"></i>
+                        <i class="bi bi-sign-intersection" *ngIf="hasOptions(field.type)" (click)="onEditOptionsModal(field.id, template)"></i>
+                      </div>
+                      <div class="component-inner">
+                        <app-dynamic-input [field]="field" [form]="form"></app-dynamic-input>
+                      </div>
+                        
+                    </div>
+                </div>
+
+            <button type="submit" class="btn btn-primary mt-4 w-100">Save</button>
+                
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+<!-- Modal Template -->
+<ng-template #template>
+  <div class="modal-header d-flex align-items-center justify-content-between">
+    <h4 class="modal-title pull-left">Modal title</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row align-items-center justify-content-center">
+      <form *ngIf="dynamicForm" [formGroup]="dynamicForm" (ngSubmit)="dynamicSubmit()">
+        <div class="row align-items-center">
+          <div style="height: 100%;" [class]="field?.bootstrapClass?.join(' ')" *ngFor="let field of dynamicFields">
+            <app-dynamic-input [field]="field" [form]="dynamicForm"></app-dynamic-input>
+          </div>
+        </div>
+        <button type="submit" class="btn mt-4 w-100" [ngClass]="{'btn-danger': submitText === 'remove Option', 'btn-primary': submitText !== 'remove Option'}">{{submitText || 'submit'}}</button>
+      </form>
+    </div>
+  </div>
+</ng-template>

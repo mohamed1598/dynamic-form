@@ -1,0 +1,32 @@
+.component-box {
+    border: 1px solid #007bff;
+    padding: 20px;
+    margin-bottom: 15px;
+    background-color: #f8f9fa;
+    cursor: move;
+    transition: transform 0.1s ease-out;
+    height: 150px;
+    position: relative;
+  }
+  .component-inner{
+    pointer-events: none;
+  }
+  
+  .edit{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    display: flex;
+  }
+
+  .edit i{
+    display: block;
+    margin: 2px;
+    font-size: 1.4rem;
+    cursor: pointer;
+  }
+
+  .component-box:hover {
+    background-color: #e9ecef;
+  }
+  
