@@ -1,0 +1,14 @@
+<div *ngIf="!userId" class="container my-5">
+    <div class="d-flex align-items-center justify-content-between">
+        <h2>Impersonate Users</h2>
+    </div>
+    <div class="row my-3">
+        <div class="col-4" *ngFor="let item of users; let i = index">
+            <div class="name-box" [routerLink]="['/users/', item]">
+                <p><strong>User : #{{item}}</strong></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-home *ngIf="userId" [isUserView]="true"></app-home>
