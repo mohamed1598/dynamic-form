@@ -80,7 +80,7 @@ export class AddEditFormComponent implements OnInit {
       if (this.formId) {
         //edit currentForm
         let forms = this.localstorageService.getItem('forms');
-        let updatedForm = forms?.find((e: Form) => e.id = this.formId);
+        let updatedForm = forms?.find((e: Form) => e.id == this.formId);
         if (!updatedForm) return;
         updatedForm.fields = this.fields;
         this.localstorageService.setItem('forms', forms);

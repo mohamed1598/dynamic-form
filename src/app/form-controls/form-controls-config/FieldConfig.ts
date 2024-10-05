@@ -6,4 +6,5 @@ export interface FieldConfig {
     type:string;
     isSubmitted?: boolean;
     bootstrapClass: string[] ;
+    isDisabled?: boolean;
 }

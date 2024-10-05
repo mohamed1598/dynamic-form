@@ -12,7 +12,7 @@ export class FormService {
     return this.fb.group(
       fields.reduce((acc: any, field : any) => {
         const validators = this.validationService.getValidators(field);
-        acc[field.name] = ['', validators];
+        acc[field.name] = [{value:'', disabled :field.isDisabled}, validators];
         return acc;
       }, {} as any)
     );

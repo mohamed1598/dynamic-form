@@ -1,13 +1,18 @@
 <div class="container my-5">
     <div class="d-flex align-items-center justify-content-between">
         <h2>My Forms</h2>
-        <a *ngIf="!isUserView" routerLink="/users" class="btn btn-primary">Users</a>
-        <a *ngIf="!isUserView" routerLink="/design" class="btn btn-primary">Create Form</a>
+        <a *ngIf="!userId" routerLink="/users" class="btn btn-primary">Users</a>
+        <a *ngIf="!userId" routerLink="/design" class="btn btn-primary">Create Form</a>
     </div>
     <div class="row my-3">
         <div class="col-4" *ngFor="let item of forms; let i = index">
-            <div class="name-box" [routerLink]="['/design/edit', item.id]">
+            <div class="name-box" [routerLink]="[userId ? '/users/submitForm':'/design/edit', item.id] "
+                [queryParams]="{'userId': userId }">
                 <p><strong>Form : #{{i+1}}</strong></p>
+
+                <div class="result" *ngIf="!userId">
+                    <i [routerLink]="['formResult/', item.id]" class="bi bi-grid-3x3-gap-fill"></i>
+                </div>
                 <!-- <span>{{item.id}}</span></div> -->
             </div>
         </div>

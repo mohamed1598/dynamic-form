@@ -1,0 +1,14 @@
+<div class="container m-4">
+  <div class="d-flex align-items-center justify-content-between">
+    <h3 class="my-5">form Id : {{formId}}</h3>
+  </div>
+
+  <div *ngIf="isBrowser">
+    <div style="width: 100%;" class="ag-theme-alpine ag-container">
+      <ag-grid-angular style="width: 100%; height: 100%;" [rowData]="rowData" [columnDefs]="columnDefs"
+        [pagination]="true" [paginationPageSize]="20" class="ag-theme-alpine">
+      </ag-grid-angular>
+    </div>
+  </div>
+  <p *ngIf="!isBrowser">AG Grid is not available in this environment.</p>
+</div>

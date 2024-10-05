@@ -17,7 +17,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
-  @Input() isUserView: boolean = false;
+  @Input() userId: number = 0;
   forms:Form[];
   constructor(private localstorageService: LocalStorageService){
     // console.log(window.location.href)

@@ -9,5 +9,5 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideClientHydration(), importProvidersFrom(ReactiveFormsModule), importProvidersFrom(ModalModule.forRoot()), importProvidersFrom(BsDropdownModule.forRoot()), provideAnimationsAsync()]
+  providers: [provideRouter(routes), provideClientHydration(), importProvidersFrom(ReactiveFormsModule), importProvidersFrom(ModalModule.forRoot()), importProvidersFrom(BsDropdownModule.forRoot()), provideAnimationsAsync(), provideAnimationsAsync()]
 };

@@ -1,0 +1,11 @@
+<div class="container row align-items-center justify-content-center mt-5">
+    <form class="my-4 p-4 rounded shadow-lg bg-white col-10 col-md-8" *ngIf="form" [formGroup]="form" (ngSubmit)="submit()">
+      <div class="row align-items-center">
+        <h1 class="text-center"> Submit Form</h1>
+        <div style="height: 100%;" [class]="field?.bootstrapClass?.join(' ')" *ngFor="let field of fields">
+          <app-dynamic-input [field]="field" [form]="form"></app-dynamic-input>
+        </div>
+      </div>
+      <button [disabled]="isSubmittedBefore" type="submit" class="btn btn-primary mt-4 w-100">{{isSubmittedBefore ? 'You have submitted this form before':"Save"}}</button>
+    </form>
+  </div>
