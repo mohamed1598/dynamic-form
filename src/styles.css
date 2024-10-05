@@ -6,3 +6,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .form-check-input.is-invalid ~ .form-check-label, .was-validated .form-check-input:invalid ~ .form-check-label {
     color: #000;
 }
+
+.name-box {
+    border: 1px solid #007bff;
+    padding: 20px;
+    margin-bottom: 15px;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    transition: transform 0.1s ease-out;
+    height: 150px;
+    position: relative;
+}
+
+.name-box:hover {
+    transform: translateY(-3px); 
+}
