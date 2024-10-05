@@ -1,0 +1,15 @@
+<div class="container my-5">
+    <div class="d-flex align-items-center justify-content-between">
+        <h2>My Forms</h2>
+        <a *ngIf="!isUserView" routerLink="/users" class="btn btn-primary">Users</a>
+        <a *ngIf="!isUserView" routerLink="/design" class="btn btn-primary">Create Form</a>
+    </div>
+    <div class="row my-3">
+        <div class="col-4" *ngFor="let item of forms; let i = index">
+            <div class="name-box" [routerLink]="['/design/edit', item.id]">
+                <p><strong>Form : #{{i+1}}</strong></p>
+                <!-- <span>{{item.id}}</span></div> -->
+            </div>
+        </div>
+    </div>
+</div>
