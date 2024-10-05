@@ -1,0 +1,11 @@
+.ag-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 70vh; /* Full height of the viewport */
+  }
+  
+  .ag-grid {
+    flex-grow: 1;
+  }
+  
