@@ -1,9 +1,9 @@
-import { CheckboxConfig } from "../../form-controls/form-controls-config/CheckboxConfig";
-import { RadioButtonsConfig } from "../../form-controls/form-controls-config/RadioButtonsConfig";
-import { SelectBoxConfig } from "../../form-controls/form-controls-config/SelectBoxConfig";
-import { TextareaConfig } from "../../form-controls/form-controls-config/TextareaConfig";
-import { TextBoxConfig } from "../../form-controls/form-controls-config/TextBoxConfig";
-import { ToggleSwitchConfig } from "../../form-controls/form-controls-config/ToggleSwitchConfig";
+import { CheckboxConfig } from "../../../form-controls/form-controls-config/CheckboxConfig";
+import { RadioButtonsConfig } from "../../../form-controls/form-controls-config/RadioButtonsConfig";
+import { SelectBoxConfig } from "../../../form-controls/form-controls-config/SelectBoxConfig";
+import { TextareaConfig } from "../../../form-controls/form-controls-config/TextareaConfig";
+import { TextBoxConfig } from "../../../form-controls/form-controls-config/TextBoxConfig";
+import { ToggleSwitchConfig } from "../../../form-controls/form-controls-config/ToggleSwitchConfig";
 
 
 type DynamicFormConfig = {

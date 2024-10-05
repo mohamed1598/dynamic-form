@@ -1,18 +1,21 @@
-import { Component, signal, WritableSignal } from '@angular/core';
+import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { TextBoxConfig } from '../form-controls/form-controls-config/TextBoxConfig';
-import { SelectBoxConfig } from '../form-controls/form-controls-config/SelectBoxConfig';
-import { RadioButtonsConfig } from '../form-controls/form-controls-config/RadioButtonsConfig';
-import { CheckboxConfig } from '../form-controls/form-controls-config/CheckboxConfig';
-import { ToggleSwitchConfig } from '../form-controls/form-controls-config/ToggleSwitchConfig';
-import { TextareaConfig } from '../form-controls/form-controls-config/TextareaConfig';
-import { FormService } from '../services/form.service';
-import { FieldConfig } from '../form-controls/form-controls-config/FieldConfig';
+import { TextBoxConfig } from '../../form-controls/form-controls-config/TextBoxConfig';
+import { SelectBoxConfig } from '../../form-controls/form-controls-config/SelectBoxConfig';
+import { RadioButtonsConfig } from '../../form-controls/form-controls-config/RadioButtonsConfig';
+import { CheckboxConfig } from '../../form-controls/form-controls-config/CheckboxConfig';
+import { ToggleSwitchConfig } from '../../form-controls/form-controls-config/ToggleSwitchConfig';
+import { TextareaConfig } from '../../form-controls/form-controls-config/TextareaConfig';
+import { FormService } from '../../services/form.service';
+import { FieldConfig } from '../../form-controls/form-controls-config/FieldConfig';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { BsModalRef, BsModalService, ModalModule } from 'ngx-bootstrap/modal';
-import { DynamicInputComponent } from "../dynamic-input/dynamic-input.component";
+import { DynamicInputComponent } from "../../dynamic-input/dynamic-input.component";
 import { DesignHelper } from './Helpers/design-helper';
+import { ActivatedRoute, Router } from '@angular/router';
+import { LocalStorageService } from '../../services/localstorage.service';
+import { Form } from '../form.model';
 
 @Component({
   selector: 'app-add-edit-form',
@@ -30,13 +33,14 @@ import { DesignHelper } from './Helpers/design-helper';
   templateUrl: './add-edit-form.component.html',
   styleUrl: './add-edit-form.component.css'
 })
-export class AddEditFormComponent {
+export class AddEditFormComponent implements OnInit {
   //#region design form 
-  form: FormGroup;
+  formId: any;
+  form: FormGroup | any;
   fields: (TextBoxConfig | SelectBoxConfig | RadioButtonsConfig | CheckboxConfig | ToggleSwitchConfig | TextareaConfig)[] = [];
-  components :WritableSignal<(TextBoxConfig | SelectBoxConfig | RadioButtonsConfig | CheckboxConfig | ToggleSwitchConfig | TextareaConfig)[]>; // use it from now don't depend on fields
+  components: WritableSignal<(TextBoxConfig | SelectBoxConfig | RadioButtonsConfig | CheckboxConfig | ToggleSwitchConfig | TextareaConfig)[]>; // use it from now don't depend on fields
   //#endregion
-  
+
   //#region dynamic form used for add  edit field and set validation and options
   dynamicForm: FormGroup | any;
   dynamicFields: any = [];
@@ -52,17 +56,49 @@ export class AddEditFormComponent {
   //modal
   modalRef?: BsModalRef;
 
-  
 
-  constructor(private fb: FormBuilder, private formService: FormService, private modalService: BsModalService) {
-    this.fields = DesignHelper.sampleFields;
-    this.components = signal([...this.fields])
-    this.form = formService.getForm(this.components());
+
+  constructor(private fb: FormBuilder, private formService: FormService, private modalService: BsModalService, private router: Router, private route: ActivatedRoute, private localstorageService: LocalStorageService) {
+    this.components = signal([...this.fields]);
+  }
+
+  ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.formId = params['id'];
+
+      this.fields = this.localstorageService.getItem('forms')?.find((e: Form) => e.id == this.formId)?.fields;
+      this.fields = this.fields ? this.fields : [];
+      
+      this.components = signal([...this.fields])
+      this.form = this.formService.getForm(this.components());
+    });
   }
 
   onSubmit(): void {
     this.fields = this.components();
-    console.log(this.fields);
+    if (this.fields?.length > 0) {
+      if (this.formId) {
+        //edit currentForm
+        let forms = this.localstorageService.getItem('forms');
+        let updatedForm = forms?.find((e: Form) => e.id = this.formId);
+        if (!updatedForm) return;
+        updatedForm.fields = this.fields;
+        this.localstorageService.setItem('forms', forms);
+        this.router.navigate([`/`]);
+      } else {
+        //create new form
+        let forms = this.localstorageService.getItem('forms') ?? [];
+        const { v4: uuidv4 } = require('uuid');
+        let form = {
+          id: uuidv4(),
+          fields: this.fields
+        };
+        forms.push(form);
+        this.localstorageService.setItem('forms', forms);
+        this.router.navigate([`/`]);
+      }
+    }
+
 
   }
 
@@ -112,11 +148,11 @@ export class AddEditFormComponent {
   onEditFieldModal(id: any, template: any) {
     DesignHelper.configFields.forEach((field: FieldConfig) => field.isSubmitted = false);
     this.submitText = 'Save';
-    
+
     //use the same form of add field
     this.onAddFieldModal(template);
     this.dynamicSubmit = this.editField;
-    
+
     //seed data to config fields
     this.dynamicForm.patchValue(this.components().find(e => e.id == id));
   }
@@ -125,7 +161,7 @@ export class AddEditFormComponent {
     DesignHelper.configFields.forEach((field: FieldConfig) => field.isSubmitted = true);
     if (this.dynamicForm.valid) {
       let value = this.dynamicForm.value;
-      
+
       //need this check to avoid doing this in validation form
       if (value?.bootstrapClass) {
         value.bootstrapClass = [value.bootstrapClass]
@@ -193,7 +229,7 @@ export class AddEditFormComponent {
       this.form = this.formService.getForm(updatedComponents);
       this.components.set(updatedComponents);
       this.modalRef?.hide()
-    } 
+    }
   }
   //#endregion
 

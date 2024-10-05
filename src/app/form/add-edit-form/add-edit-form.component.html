@@ -13,7 +13,7 @@
                 </button>
             </div>
         </div>
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="row align-items-center ">
                 <div style="height: 100%;" [class]="field?.bootstrapClass?.join(' ')"
                     *ngFor="let field of components(); let i = index" draggable="true"
